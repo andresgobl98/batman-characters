@@ -14,7 +14,12 @@ const characterList = {
   scarecrow: 576,
   joker: 370,
   catwoman: 165,
-  riddler: 558
+  riddler: 558,
+  twoFace: 678,
+  mrFreeze: 457,
+  grundy: 609,
+  nightwing: 491,
+  robin: 561
 }
 
 function App() {
@@ -29,7 +34,7 @@ function App() {
       let charList = []
       for (const char in characterList) {
         const res = await axios.get(`api/${superheroAccessToken}/${characterList[char]}`)
-        charList = [...charList, res.data]
+        charList = [...charList, {...res.data, selected: false}]
       }
       setCharacters(charList)
     } catch (error) {
