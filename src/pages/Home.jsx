@@ -6,6 +6,7 @@ import SwiperCore, {
 } from 'swiper'
 
 import BatmanLogo from '../assets/Batman-Logo.png'
+import LockIcon from '../assets/lock-icon.png'
 
 import 'swiper/swiper-bundle.min.css'
 import "swiper/swiper.min.css"
@@ -22,7 +23,7 @@ const Home = ({characters, loading}) => {
   useEffect(() => {
     if (characters.length) {
       setChars(characters)
-      setCurrentChar(characters[0].image.url)
+      setCurrentChar(characters.filter(char => !char.hidden )[0])
     }
   }, [characters])
 
@@ -33,7 +34,7 @@ const Home = ({characters, loading}) => {
   }
 
   const goBack = () => {
-    setCurrentChar("")
+    setCurrentChar(characters[0])
     setSelectedChar(undefined)
   }
 
@@ -60,8 +61,15 @@ const Home = ({characters, loading}) => {
             :
             <CharacterGallery chars={chars} selectCard={selectCard} setCurrentChar={setCurrentChar} />
           }
-          <div className={`char-image mb-3 lg:mb-0 flex justify-center lg:ml-3 lg:w-2/3`}>
-            <img src={selectedChar ? selectedChar.image.url : currentChar} alt="" />
+          <div className={`${selectedChar === undefined && currentChar?.hidden && 'char-image-hidden'} char-image mb-3 lg:mb-0 flex justify-center lg:ml-3 lg:w-2/3`}>
+            <img src={selectedChar ? 
+              selectedChar?.image?.url 
+              : 
+              (currentChar?.hidden ? 
+                LockIcon 
+                : 
+                currentChar?.image?.url
+              )} alt="" />
           </div>
         </div>
       }
@@ -130,12 +138,18 @@ const CharacterGallery = ({chars, selectCard, setCurrentChar}) => {
             {chars?.map((char, index) => char.image.url &&
                 <SwiperSlide key={index}>
                   <div
-                    className={`card relative text-white rounded-md border-solid border-2 border-white overflow-hidden m-0 cursor-pointer`}
-                    onClick={() => selectCard(char)}
-                    onMouseEnter={() => setCurrentChar(char.image.url)}
+                    className={`card relative text-white rounded-md border-solid border-2 border-white overflow-hidden m-0 cursor-pointer my-2`}
+                    onClick={() => !char.hidden && selectCard(char)}
+                    onMouseEnter={() => setCurrentChar(char)}
                   >
-                    <img src={char.image.url} alt={char.name} className={`${!char.selected && 'opacity-50'}`} />
-                    {!char.selected && <span className="block absolute top-0 right-2">NEW</span>}
+                    {char.hidden ? 
+                      <span className="flex h-full justify-center items-center text-3xl">?</span> 
+                      :
+                      <Fragment>
+                        <img src={char.image.url} alt={char.name} className={`${!char.selected && 'opacity-40'}`} />
+                        {!char.selected && <span className="block absolute top-0 right-2">NEW</span>}
+                      </Fragment>
+                    }
                   </div>
                 </SwiperSlide>
             )}
@@ -148,11 +162,18 @@ const CharacterGallery = ({chars, selectCard, setCurrentChar}) => {
               <div
                 key={index}
                 className={`card relative text-white rounded-md border-solid border-2 border-white overflow-hidden m-0 cursor-pointer`}
-                onClick={() => selectCard(char)}
-                onMouseEnter={() => setCurrentChar(char.image.url)}
+                onClick={() => !char.hidden && selectCard(char)}
+                onMouseEnter={() => setCurrentChar(char)}
               >
-                <img src={char.image.url} alt={char.name} className={`${!char.selected && 'opacity-50'}`} />
-                {!char.selected && <span className="block absolute top-0 right-2">NEW</span>}
+                {char.hidden ? 
+                  <span className="flex h-full justify-center items-center text-3xl">?</span> 
+                  :
+                  <Fragment>
+                    <img src={char.image.url} alt={char.name} className={`${!char.selected && 'opacity-40'}`} />
+                    {!char.selected && <span className="block absolute top-0 right-2">NEW</span>}
+                  </Fragment>
+                }
+                
               </div>
             )
             :

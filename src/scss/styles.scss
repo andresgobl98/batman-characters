@@ -166,6 +166,9 @@ select {
         height: 70vh;
       }
     }
+    &-hidden {
+      opacity: 0.5;
+    }
   }
 
   .card {
@@ -176,7 +179,7 @@ select {
       object-fit: cover;
     }
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
   }
 }
