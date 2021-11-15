@@ -171,8 +171,12 @@ select {
   .card {
     width: clamp(80px, 16vh, 200px);
     height: clamp(80px, 16vh, 200px);
+    transition: all ease 0.3s;
     img {
       object-fit: cover;
+    }
+    &:hover {
+      transform: scale(1.1);
     }
   }
 }

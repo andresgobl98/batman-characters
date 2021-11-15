@@ -4,7 +4,6 @@ import axios from 'axios'
 import './scss/styles.scss'
 
 import Home from './pages/Home'
-import Bio from './pages/Bio'
 
 const superheroAccessToken = "10227360787791747"
 
@@ -51,9 +50,6 @@ function App() {
       <Switch>
         <Route path="/" exact>
           <Home characters={characters} loading={loading} />
-        </Route>
-        <Route patch="bio/:slug" exact>
-          <Bio />
         </Route>
       </Switch>
     </div>
