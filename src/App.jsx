@@ -1,23 +1,15 @@
 import { useEffect, useState } from 'react'
-import { Route, Switch, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import './scss/styles.scss'
 
 import Home from './pages/Home'
-import Bio from './pages/Bio'
+
+import CharacterList from './queryData/charList'
 
 const superheroAccessToken = "10227360787791747"
 
-const characterList = {
-  batman: 70,
-  penguin: 514,
-  scarecrow: 576,
-  joker: 370,
-  catwoman: 165,
-  riddler: 558
-}
-
 function App() {
+  const [loading, setLoading] = useState(false)
   const [characters, setCharacters] = useState([])
 
   useEffect(() => {
@@ -25,30 +17,30 @@ function App() {
   }, [])
 
   const fetchCharacters = async () => {
+    setLoading(true)
     try {
       let charList = []
-      for (const char in characterList) {
-        const res = await axios.get(`api/${superheroAccessToken}/${characterList[char]}`)
-        charList = [...charList, res.data]
+      
+      for (const char in CharacterList) {
+        const randomNumber = Math.random().toFixed(1)
+        let hidden = false
+        randomNumber <= 0.7 && (hidden = true)
+        const res = await axios.get(`api/${superheroAccessToken}/${CharacterList[char]}`)
+        charList = [...charList, {...res.data, selected: false, hidden: hidden}]
       }
       setCharacters(charList)
+      setLoading(false)
     } catch (error) {
       console.error(error)
+      setLoading(false)
     }
   }
 
   return (
     <div className="App">
-      <Switch>
-        <Route path="/" exact>
-          <Home characters={characters} />
-        </Route>
-        <Route patch="bio/:slug" exact>
-          <Bio />
-        </Route>
-      </Switch>
+      <Home characters={characters} loading={loading} />
     </div>
   );
 }
 
-export default withRouter(App);
+export default App;
