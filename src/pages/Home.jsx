@@ -43,14 +43,14 @@ const Home = ({characters, loading}) => {
       {loading ? 
         <div className="home flex justify-center items-center">
           <span className="spinner h-20 w-20 rounded-full flex justify-center items-center">
-            <img src={BatmanLogo} alt="" />
+            <img src={BatmanLogo} alt="Loading" />
           </span>
         </div>
         :
         <div className="home flex flex-col-reverse justify-end lg:flex-row lg:justify-center items-center">
           {selectedChar &&
             <button
-              className="absolute top-10 md:top-20 left-16 md:left-24 lg:left-40 text-white mb-3"
+              className="absolute top-10 md:top-20 left-16 md:left-24 lg:left-40 text-white mb-3 px-3 py-2 rounded-full hover:text-black hover:bg-white"
               onClick={() => goBack()}
             >
               Return
@@ -69,7 +69,7 @@ const Home = ({characters, loading}) => {
                 LockIcon 
                 : 
                 currentChar?.image?.url
-              )} alt="" />
+              )} alt={selectedChar?.name || currentChar?.name} />
           </div>
         </div>
       }

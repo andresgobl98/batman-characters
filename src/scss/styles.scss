@@ -111,6 +111,14 @@ select {
     }
   }
 
+  button {
+    border: solid 2px white;
+    transition: all ease 0.3s;
+    :hover {
+      transform: scale(1.05)
+    }
+  }
+
   @-webkit-keyframes breathing {
     0% {
       -webkit-transform: scale(0.9);
