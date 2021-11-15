@@ -23,6 +23,7 @@ const characterList = {
 }
 
 function App() {
+  const [loading, setLoading] = useState(false)
   const [characters, setCharacters] = useState([])
 
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
   }, [])
 
   const fetchCharacters = async () => {
+    setLoading(true)
     try {
       let charList = []
       for (const char in characterList) {
@@ -37,8 +39,10 @@ function App() {
         charList = [...charList, {...res.data, selected: false}]
       }
       setCharacters(charList)
+      setLoading(false)
     } catch (error) {
       console.error(error)
+      setLoading(false)
     }
   }
 
@@ -46,7 +50,7 @@ function App() {
     <div className="App">
       <Switch>
         <Route path="/" exact>
-          <Home characters={characters} />
+          <Home characters={characters} loading={loading} />
         </Route>
         <Route patch="bio/:slug" exact>
           <Bio />

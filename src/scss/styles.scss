@@ -93,7 +93,7 @@ select {
 
 .home {
   min-height: 100vh;
-  padding: 3rem;
+  padding: 6rem 3rem;
   background: linear-gradient(90deg, rgba(4,28,32,1) 0%, rgba(4,28,32,1) 20%, rgba(0,0,0,1) 100%);
 
   @media screen and (min-width: $tablet) {
@@ -103,13 +103,74 @@ select {
     padding: 3em 10em;
   }
 
+  .spinner {
+    background-color: rgb(44, 128, 143);
+    img {
+      -webkit-animation: breathing 3s ease-out infinite normal;
+      animation: breathing 3s ease-out infinite normal;
+    }
+  }
+
+  @-webkit-keyframes breathing {
+    0% {
+      -webkit-transform: scale(0.9);
+      transform: scale(0.9);
+    }
+  
+    25% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  
+    60% {
+      -webkit-transform: scale(0.9);
+      transform: scale(0.9);
+    }
+  
+    100% {
+      -webkit-transform: scale(0.9);
+      transform: scale(0.9);
+    }
+  }
+  
+  @keyframes breathing {
+    0% {
+      -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+      transform: scale(0.9);
+    }
+  
+    25% {
+      -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+      transform: scale(1);
+    }
+  
+    60% {
+      -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+      transform: scale(0.9);
+    }
+  
+    100% {
+      -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+      transform: scale(0.9);
+    }
+  }
+
   .char-image {
     img {
       height: 50vh;
+      @media screen and (min-width: $tablet) {
+        height: 70vh;
+      }
     }
   }
 
   .card {
+    width: clamp(80px, 16vh, 200px);
+    height: clamp(80px, 16vh, 200px);
     img {
       object-fit: cover;
     }
